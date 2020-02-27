@@ -6,23 +6,14 @@ import MASInfrastructure.Agent.InfraAgentReference;
 public class AgentService {
 
     private InfraAgent infraAgent;
-
     private EtatPerceptionService attente;
     private EtatDecisionService action;
-
     private AgentComposant composant;
-
     private int type;
-
     private int nombreDeReponseMax;
-
     private InfraAgentReference brodcaster;
-
     private InfraAgentReference connecteur;
-
-
     private String nom;
-
     private boolean estConnecte = false;
 
     public EtatPerceptionService getAttente() {
@@ -33,15 +24,14 @@ public class AgentService {
         return action;
     }
 
-    public AgentService(String nom,int type,int nbReponseMax) {
+    public AgentService(String nom, int type, int nbReponseMax) {
         this.nombreDeReponseMax = nbReponseMax;
         this.type = type;
         this.nom = nom;
-        action=new EtatDecisionService(nom,type,this);
-        attente=new EtatPerceptionService(nom,type,this);
+        action = new EtatDecisionService(nom, type, this);
+        attente = new EtatPerceptionService(nom, type, this);
         attente.setNextState(action);
         action.setNextState(attente);
-
     }
 
     public AgentComposant getComposant() {

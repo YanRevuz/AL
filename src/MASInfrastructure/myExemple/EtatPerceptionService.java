@@ -17,18 +17,16 @@ public class EtatPerceptionService implements IState {
     private String name;
     private int agentType;
     private ICommunication communication;
-    public void setCommunication(ICommunication communication) {
-        this.communication = communication;
-    }
-
-
     private AgentService myService;
-
 
     public EtatPerceptionService(String name, int type, AgentService a) {
         this.name = name;
-        this.agentType  = type;
+        this.agentType = type;
         this.myService = a;
+    }
+
+    public void setCommunication(ICommunication communication) {
+        this.communication = communication;
     }
 
     public void setCommunicationAgt(InfraAgent communicationAgt) {
@@ -36,7 +34,7 @@ public class EtatPerceptionService implements IState {
     }
 
     public void setInfraAgent(InfraAgent agt) {
-        this.agt=agt;
+        this.agt = agt;
     }
 
     private IState nextState;
@@ -50,24 +48,24 @@ public class EtatPerceptionService implements IState {
 
         ArrayList<String> info = new ArrayList<>();
         ArrayList<Message> infraMessages = new ArrayList<>(this.agt.readMessages().stream().map(x -> (Message) x).collect(Collectors.toList()));
-        if(myService.type() == 0){
+        if (myService.type() == 0) {
             if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "PropageDemande") {
                 info.add("Brodcast");
-                c.shareVariable("decision",info);
-            }else if(infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() =="ReponsePositiveService") {
+                c.shareVariable("decision", info);
+            } else if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "ReponsePositiveService") {
                 myService.setConnecteur(infraMessages.get(0).getEmitter());
                 info.add("okpourconnexion");
                 c.shareVariable("decision", info);
             }
-        }else{
+        } else {
             if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "Brodcast") {
                 myService.setBrodcaster(infraMessages.get(0).getEmitter());
                 info.add("Receive_Brodcast");
-                c.shareVariable("decision",info);
-            }else if(infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "ReponsePositiveComposant"){
+                c.shareVariable("decision", info);
+            } else if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "ReponsePositiveComposant") {
                 info.add("ReponsePositiveService");
-                c.shareVariable("decision",info);
-            }else if(infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() =="okpourconnexion"){
+                c.shareVariable("decision", info);
+            } else if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "okpourconnexion") {
                 myService.setConnecteur(infraMessages.get(0).getEmitter());
                 myService.setEstConnecte(true);
             }

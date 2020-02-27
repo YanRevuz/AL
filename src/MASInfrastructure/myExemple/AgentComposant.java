@@ -8,26 +8,21 @@ import java.util.List;
 public class AgentComposant {
 
     private InfraAgent infraAgent;
-
     private EtatDecisionComposant decisionComposant;
     private EtatPerceptionComposant perceptionComposant;
-
     private List<AgentService> agentServiceList;
-
     private String nom;
-
 
     public AgentComposant(String nom) {
         this.nom = nom;
         this.agentServiceList = new ArrayList<AgentService>();
-        decisionComposant=new EtatDecisionComposant(nom,this);
-        perceptionComposant=new EtatPerceptionComposant(nom);
+        decisionComposant = new EtatDecisionComposant(nom, this);
+        perceptionComposant = new EtatPerceptionComposant(nom);
         perceptionComposant.setNextState(decisionComposant);
         decisionComposant.setNextState(perceptionComposant);
-
     }
 
-    public void addAgent(AgentService agent){
+    public void addAgent(AgentService agent) {
         agentServiceList.add(agent);
     }
 

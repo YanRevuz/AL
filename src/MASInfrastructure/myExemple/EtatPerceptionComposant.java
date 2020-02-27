@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class EtatPerceptionComposant implements IState {
+
     private IState nextState;
     private ICommunication communication;
     private InfraAgent agt;
@@ -35,19 +36,17 @@ public class EtatPerceptionComposant implements IState {
     public void execute(LifeCycle c) {
         ArrayList<String> info = new ArrayList<>();
         ArrayList<Message> infraMessages = new ArrayList<>(this.agt.readMessages().stream().map(x -> (Message) x).collect(Collectors.toList()));
-        if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() =="Demande_Connexion") {
+        if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "Demande_Connexion") {
             info.add("Demande_Connexion");
-            c.shareVariable("decision",info);
-        }else if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() =="Propage_Brodcast"){
+            c.shareVariable("decision", info);
+        } else if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "Propage_Brodcast") {
             info.add("ReponsePositiveComposant");
-            c.shareVariable("decision",info);
-        }else if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() =="jesuiscobbecte"){
+            c.shareVariable("decision", info);
+        } else if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "jesuiscobbecte") {
             System.out.println(name + " EST UNE APPLI");
         }
         c.setCurrentState(this.nextState);
     }
-
-
 }
 
 
