@@ -62,7 +62,7 @@ public class main {
 
         Message m = new Message(null, infraC1.getInfraAgentReference(),"Demande_Connexion");
         if (maCom != null) {
-            System.out.println("gejrhgkerrejkherkjfhekrjfhkejfhek");
+            System.out.println("J'ai clique sur c1 en tant que user");
             maCom.sendMessage(m);
         }
 
