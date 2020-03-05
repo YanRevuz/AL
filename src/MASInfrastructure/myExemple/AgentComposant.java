@@ -45,8 +45,4 @@ public class AgentComposant {
     public void setInfraAgent(InfraAgent infraAgent) {
         this.infraAgent = infraAgent;
     }
-
-    public String getNom() {
-        return nom;
-    }
 }

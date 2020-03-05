@@ -11,9 +11,10 @@ public class AgentService {
     private AgentComposant composant;
     private int type;
     private int nombreDeReponseMax;
-    private InfraAgentReference brodcaster;
+    private InfraAgentReference broadcaster;
     private InfraAgentReference connecteur;
     private String nom;
+    private String monInterface;
     private boolean estConnecte = false;
 
     public EtatPerceptionService getAttente() {
@@ -24,10 +25,11 @@ public class AgentService {
         return action;
     }
 
-    public AgentService(String nom, int type, int nbReponseMax) {
+    public AgentService(String nom, int type, int nbReponseMax, String monInterface) {
         this.nombreDeReponseMax = nbReponseMax;
         this.type = type;
         this.nom = nom;
+        this.monInterface = monInterface;
         action = new EtatDecisionService(nom, type, this);
         attente = new EtatPerceptionService(nom, type, this);
         attente.setNextState(action);
@@ -58,12 +60,12 @@ public class AgentService {
         return type;
     }
 
-    public InfraAgentReference getBrodcaster() {
-        return brodcaster;
+    public InfraAgentReference getBroadcaster() {
+        return broadcaster;
     }
 
-    public void setBrodcaster(InfraAgentReference brodcaster) {
-        this.brodcaster = brodcaster;
+    public void setBroadcaster(InfraAgentReference broadcaster) {
+        this.broadcaster = broadcaster;
     }
 
     public InfraAgentReference getConnecteur() {
@@ -74,11 +76,12 @@ public class AgentService {
         this.connecteur = connecteur;
     }
 
-    public boolean isEstConnecte() {
-        return estConnecte;
-    }
-
     public void setEstConnecte(boolean estConnecte) {
         this.estConnecte = estConnecte;
     }
+
+    public String getMonInterface() {
+        return monInterface;
+    }
+
 }

@@ -46,24 +46,36 @@ public class EtatPerceptionService implements IState {
     @Override
     public void execute(LifeCycle c) {
 
-        ArrayList<String> info = new ArrayList<>();
+        ArrayList<String[]> info = new ArrayList<>();
         ArrayList<Message> infraMessages = new ArrayList<>(this.agt.readMessages().stream().map(x -> (Message) x).collect(Collectors.toList()));
         if (myService.type() == 0) {
             if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "PropageDemande") {
-                info.add("Brodcast");
+                String[] information = new String[2];
+                information[0] = "Broadcast";
+                information[1] = myService.getMonInterface();
+                info.add(information);
                 c.shareVariable("decision", info);
             } else if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "ReponsePositiveService") {
                 myService.setConnecteur(infraMessages.get(0).getEmitter());
-                info.add("okpourconnexion");
+                String[] information = new String[2];
+                information[0] = "okpourconnexion";
+                information[1] = name;
+                info.add(information);
                 c.shareVariable("decision", info);
             }
         } else {
-            if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "Brodcast") {
-                myService.setBrodcaster(infraMessages.get(0).getEmitter());
-                info.add("Receive_Brodcast");
+            if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "Broadcast") {
+                myService.setBroadcaster(infraMessages.get(0).getEmitter());
+                String[] information = new String[2];
+                information[0] = "Receive_Broadcast";
+                information[1] = infraMessages.get(0).getId();
+                info.add(information);
                 c.shareVariable("decision", info);
             } else if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "ReponsePositiveComposant") {
-                info.add("ReponsePositiveService");
+                String[] information = new String[2];
+                information[0] = "ReponsePositiveService";
+                information[1] = name;
+                info.add(information);
                 c.shareVariable("decision", info);
             } else if (infraMessages != null && infraMessages.size() != 0 && infraMessages.get(0).getContent() == "okpourconnexion") {
                 myService.setConnecteur(infraMessages.get(0).getEmitter());

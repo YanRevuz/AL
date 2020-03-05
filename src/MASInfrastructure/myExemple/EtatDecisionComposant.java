@@ -34,32 +34,29 @@ public class EtatDecisionComposant implements IState {
     @Override
     public void execute(LifeCycle c) {
         if (c.getSharedData("decision") != null && c.getSharedData("decision").size() > 0) {
-            System.out.println(name + " " + c.getSharedData("decision"));
-            String lastInfo = c.getSharedData("decision").get(0).toString();
-
-            switch (lastInfo) {
+            String[] lastInfo = (String[])c.getSharedData("decision").get(0);
+            switch (lastInfo[0]) {
+                //J'ai perçu une demande de connexion donc je la propage à mon service
                 case "Demande_Connexion":
-                    System.out.println("propagation de la demande par " + name);
+                    System.out.println(name +" dit qu'il a reçu une demande de connexion. Il va donc la propager à son service");
                     Message m = new Message(agt.getInfraAgentReference(),
-                            myComposant.getAgentServiceList().get(0).getInfraAgent().getInfraAgentReference(),
-                            "PropageDemande");
+                            myComposant.getAgentServiceList().get(0).getInfraAgent().getInfraAgentReference(), "PropageDemande",null);
                     if (communication != null) {
                         communication.sendMessage(m);
                     }
                     break;
+                //J'ai percu une demande de propagation de connexion mais je n'ai pas de service à satisfaire donc je decide de repondre postiviement à mon service
                 case "ReponsePositiveComposant":
-                    System.out.println("envoie de la rep positive par " + name);
+                    System.out.println(name + " dit qu'il peut etre connecté et repond positivement à "+myComposant.getAgentServiceList().get(0).getNom());
                     Message m1 = new Message(agt.getInfraAgentReference(),
                             myComposant.getAgentServiceList().get(0).getInfraAgent().getInfraAgentReference(),
-                            "ReponsePositiveComposant");
+                            "ReponsePositiveComposant",null);
                     if (communication != null) {
                         communication.sendMessage(m1);
                     }
                     break;
             }
             c.getSharedData("decision").remove(0);
-        } else {
-            System.out.println("je n'ai pas de perception (" + name + ")");
         }
 
         c.setCurrentState(this.nextState);
