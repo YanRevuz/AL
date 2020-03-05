@@ -16,15 +16,15 @@ Comme nous n’avons pas d’interface, le choix de l’utilisateur sur le premi
 
 ![](https://github.com/YanRevuz/AL/blob/master/Asset/code.png)
 
-# Etat des agents.
+# Etat des agents
 
 Chaque agent va alterner infiniment entre deux états :
-L’état perception : dans cet état chaque agent va percevoir son environnement.
-L’état décision : dans cet état chaque agent va effectuer une action en fonction de ce qu’il a perçu.
+- L’état perception : dans cet état chaque agent va percevoir son environnement.
+- L’état décision : dans cet état chaque agent va effectuer une action en fonction de ce qu’il a perçu.
 
 # Output lors d’une exécution du code :
 
-- J'ai clique sur c1 en tant que user **fefef**
+- J'ai clique sur c1 en tant que user **//Choix de l'utilisateur**
 - C1 dit qu'il a reçu une demande de connexion. Il va donc la propager à son service
 - S1 dit : Je vais broadcast et demander l'interface I1
 - S2 dit qu'il fournit bien l'interface I1 et donc qu'il propage la demande à son composant
